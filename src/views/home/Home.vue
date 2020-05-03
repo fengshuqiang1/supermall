@@ -80,27 +80,11 @@ export default {
   },
   created(){
     // 请求轮播图等数据
-    this.getHomeMultidata().then(()=>{
-      this.$nextTick(()=>{
-        this.$refs.scroll.refresh()
-      })
-    })
+    this.getHomeMultidata()
     // 请求流行等数据
-    this.getRecommendData('pop').then(()=>{
-      this.$nextTick(()=>{
-        this.$refs.scroll.refresh()
-      })
-    })
-    this.getRecommendData('new').then(()=>{
-      this.$nextTick(()=>{
-        this.$refs.scroll.refresh()
-      })
-    })
-    this.getRecommendData('sell').then(()=>{
-      this.$nextTick(()=>{
-        this.$refs.scroll.refresh()
-      })
-    })
+    this.getRecommendData('pop')
+    this.getRecommendData('new')
+    this.getRecommendData('sell')
   },
   computed: {
     showGoods() {

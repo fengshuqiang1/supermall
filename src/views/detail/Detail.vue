@@ -16,7 +16,7 @@
         <DetailRecommend :recommend-list="recommendList" ref="recommend"/>
     </base-scroll>
     <BackTop v-show="isShowBackTop" @click.native="backToTop"/>
-    <DetailBottomBar />
+    <DetailBottomBar @addCart="handleAddCart"/>
   </div>
 </template>
 
@@ -57,23 +57,32 @@ export default {
   },
   data(){
     return {
+      //商品ID
       iid:'',
       //用于存储轮播图
       detailSwiper:[],
+      //商品信息
       goodsInfo:{},
+      //商店信息
       shopInfo:{},
+      //商品展示
       productShow:{},
+      //商品参数
       paramsInfo:{},
+      //商品评论
       commentInfo:{},
+      //商品推荐
       recommendList:[],
+      //位置
       paramsPosition:0,
       commentPosition:0,
       recommendPosition:0,
+      //返回顶部按钮控制
       isShowBackTop:false
     }
   },
   created(){
-    //获取传递过来的iid
+    //获取通过路由API传递过来的iid
     this.iid = this.$route.params.iid
     //进行数据请求
     this.getDetailData(this.iid)
@@ -84,6 +93,22 @@ export default {
     this.$bus.$off('itemImgLoad', this.itemRefresh)
   },
   methods:{
+    //添加商品到购物车
+    handleAddCart(){
+      if (Object.keys(this.goodsInfo).length) {
+        //整理要用到的数据
+        let product = {}
+        product.iid = this.iid
+        product.title = this.goodsInfo.title
+        product.desc = this.goodsInfo.desc
+        product.img = this.detailSwiper[0]
+        product.price = this.goodsInfo.price
+        //将数据保存到store中
+        this.$store.dispatch('addCart', product)
+      }else{
+        console.log('你点击的太快了')
+      }
+    },
     //点击回到顶部
     backToTop() {
       this.$refs.scroll.scrollTo(0, 0, 500)
@@ -140,7 +165,8 @@ export default {
         // 商品信息
         this.goodsInfo = {
           title:res.data.result.itemInfo.title,
-          price:res.data.result.itemInfo.price,
+          desc:res.data.result.itemInfo.desc,
+          price:res.data.result.itemInfo.lowNowPrice,
           oldPrice:res.data.result.itemInfo.oldPrice,
           discountDesc:res.data.result.itemInfo.discountDesc,
           discountBgColor:res.data.result.itemInfo.discountBgColor,
