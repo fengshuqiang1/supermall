@@ -104,7 +104,9 @@ export default {
         product.img = this.detailSwiper[0]
         product.price = this.goodsInfo.price
         //将数据保存到store中
-        this.$store.dispatch('addCart', product)
+        this.$store.dispatch('addCart', product).then(res => {
+          this.$toast.show(res, 2000)
+        })
       }else{
         console.log('你点击的太快了')
       }

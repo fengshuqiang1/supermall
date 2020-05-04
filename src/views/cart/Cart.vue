@@ -1,28 +1,28 @@
 <template>
-  <div>
+  <div class="cart">
     <!-- 导航 -->
-    <CartNavBar/>
+    <CartNavBar />
     <!-- 商品列表 -->
-    <CartProduct/>
+    <CartProduct />
     <!-- 底部汇总 -->
-    <CartBottomBar/>
+    <CartBottomBar />
   </div>
 </template>
 
 <script>
-import CartNavBar from './NavBar'
-import CartProduct from './Product'
-import CartBottomBar from './BottomBar'
+import CartNavBar from "./NavBar";
+import CartProduct from "./Product";
+import CartBottomBar from "./BottomBar";
+
+
 export default {
-  name:'Cart',
-  components:{
+  name: "Cart",
+  components: {
     CartNavBar,
     CartProduct,
     CartBottomBar
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
